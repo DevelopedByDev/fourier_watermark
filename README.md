@@ -1,70 +1,78 @@
 # Fourier Transform Watermarking
 
-This project implements a digital watermarking system using the Discrete Fourier Transform (DFT) for grayscale images.
+A digital watermarking system using the Discrete Fourier Transform (DFT) for both images and videos.
 
 ## Overview
 
-Digital watermarking embeds hidden data into media files to protect copyright or verify authenticity. This implementation uses frequency domain watermarking by embedding the watermark in the Fourier spectrum of the original image.
+This project implements frequency domain watermarking by embedding data in the Fourier spectrum of images and videos for copyright protection and authenticity verification.
 
-## Key Features
+## Features
 
-- Embed watermarks into grayscale images using DFT
-- Extract watermarks from watermarked images
-- Visualize frequency spectrum before and after watermarking
-- Compare original and watermarked images
+- Image watermarking using DFT
+- Video watermarking with frame-by-frame processing
+- Time-domain video watermarking
+- Watermark extraction and visualization
+- Spectrum analysis tools
 
 ## Requirements
-
-- Python 3.x
-- NumPy
-- OpenCV (cv2)
-- Matplotlib
-
-You can install the required packages using:
 
 ```
 pip install numpy opencv-python matplotlib
 ```
 
+## Core Functions
+
+### Image Processing
+- **embed_watermark**: Embeds a watermark in an image using frequency domain manipulation
+- **extract_watermark**: Recovers a watermark from a watermarked image
+- **visualize_spectrum**: Displays the Fourier transform magnitude spectrum
+
+### Video Processing
+- **embed_video_watermark_TD**: Embeds a 1D signal watermark in a video using time-domain techniques
+- **extract_video_watermark_TD**: Extracts the embedded watermark from a video
+- **load_video**: Converts video files to processable NumPy arrays
+
+### Demo Functions
+- **example_usage_image**: Demonstrates the complete image watermarking pipeline
+- **example_usage_video**: Shows frame-by-frame video watermarking
+- **example_usage_video_TD**: Demonstrates time-domain video watermarking
+
 ## Usage
 
-1. Create an `input` directory in the project root
-2. Place your original image as `input/original.png`
-3. Place your watermark image as `input/watermark.png`
-4. Edit `main.py` and uncomment the `example_usage()` function call
-5. Run the script: `python main.py`
+1. Create an `input` directory
+2. Add your source files:
+   - For images: `input/original.png` and `input/watermark.png`
+   - For videos: `input/meatthezoo.mp4` and `input/youtube_watermark.jpg`
+3. Run the appropriate example function in `main.py`:
+   ```python
+   # For image watermarking
+   example_usage_image()
+   
+   # For video watermarking
+   example_usage_video()
+   
+   # For time-domain video watermarking
+   example_usage_video_TD()
+   ```
 
 ## How It Works
 
-### Embedding Process
+### Image Watermarking
+1. Transform the image to frequency domain using FFT
+2. Modify magnitude values to embed the watermark
+3. Apply inverse FFT to get the watermarked image
+4. Extract by comparing frequency spectra of original and watermarked images
 
-1. The original image is transformed to the frequency domain using 2D FFT
-2. The watermark is embedded by modifying magnitude values in the spectrum
-3. Inverse FFT is applied to get the watermarked image
-
-### Extraction Process
-
-1. Both original and watermarked images are transformed to the frequency domain
-2. The difference between their spectrums reveals the embedded watermark
-3. The extracted watermark is normalized and thresholded
+### Video Watermarking
+- **Frequency Domain**: Process each frame using the image watermarking technique
+- **Time Domain**: Embed a sinusoidal signal in specific pixel locations across frames
 
 ## Output
 
-The script generates the following output in the `output` directory:
+Results are saved to the `output` directory, including watermarked media and extraction visualizations.
 
-- `watermarked.png`: The image with embedded watermark
-- `extracted_watermark.png`: The extracted watermark
-- `results.png`: Visualization comparing all images
+## Limitations & Future Work
 
-## Limitations
-
-- Works best with grayscale images
-- The watermark should be smaller than the original image
-- The original image is required for watermark extraction
-
-## Future Improvements
-
-- Support for color images
-- Blind watermark extraction (without original image)
-- Improved robustness against image manipulations
-- Parameter optimization for better watermark invisibility 
+- Currently optimized for grayscale images
+- Non-blind watermarking (requires original for extraction)
+- Future: Support for color images, blind extraction, improved robustness
