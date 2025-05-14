@@ -184,8 +184,8 @@ def example_usage_image():
     # Load images
     try:
         # Replace with your actual image paths
-        original_image = load_image("input\ghibli_image.png")
-        watermark = load_image("input\openai_watermark.png")
+        original_image = load_image("input/ghibli_image.png")
+        watermark = load_image("input/openai_watermark.png")
         
         # Embed watermark
         watermarked_image = embed_watermark(original_image, watermark, alpha=0.3)
@@ -228,15 +228,15 @@ def example_usage_image():
     except Exception as e:
         print(f"Error: {e}")
         print("Please ensure you have valid input images in the 'input' directory.")
-        print("Required files: 'input\original.png' and 'input\watermark.png'")
+        print("Required files: 'input/original.png' and 'input/watermark.png'")
 
 def example_usage_video():
     """
     Example usage of the watermarking function on each frame of a video
     """
 
-    video = load_video("input\meatthezoo.mp4")
-    watermark = cv2.resize(load_image("input\youtube_watermark.jpg"), (video.shape[2], video.shape[1]))
+    video = load_video("input/meatthezoo.mp4")
+    watermark = cv2.resize(load_image("input/youtube_watermark.jpg"), (video.shape[2], video.shape[1]))
     _, watermark = cv2.threshold(watermark, 100, 255, cv2.THRESH_BINARY)
     plt.imshow(watermark, cmap=cm.gray, vmin=0, vmax=255)
     # plt.show()
@@ -268,7 +268,7 @@ def example_usage_video():
     plt.show()
 
 def example_usage_video_TD():
-    video = load_video("input\meatthezoo.mp4")
+    video = load_video("input/meatthezoo.mp4")
     time = np.linspace(0, video.shape[0], video.shape[0])
     freq = 10
     N = len(time)
